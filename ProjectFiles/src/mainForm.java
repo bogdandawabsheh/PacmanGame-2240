@@ -1,11 +1,20 @@
-import javax.*;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 public class mainForm extends javax.swing.JFrame {
 
     /**
      * Creates new form mainMenuForm
      */
     public mainForm() {
-        initComponents();
+       initComponents();
+        
     }
 
     /**
@@ -16,20 +25,23 @@ public class mainForm extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
         bttnStart = new javax.swing.JButton();
         bttnHighScore = new javax.swing.JButton();
         bttnExit = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bttnStart.setText("Start Game");
+        JLabel backgroundImage = new JLabel(new ImageIcon("PacmanMainMenu.jpg"));
+    
+        this.setTitle("Pacman Game");
+        
+        add(backgroundImage);
+        
+        bttnStart.setText("Start game");
         bttnStart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttnStartActionPerformed(evt);
-            }
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		bttnStartActionPerformed(evt);
+        	}
         });
-
         bttnHighScore.setText("High Scores");
         bttnHighScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,20 +85,27 @@ public class mainForm extends javax.swing.JFrame {
         bttnExit.getAccessibleContext().setAccessibleName("bttnExit");
 
         pack();
-    }// </editor-fold>                        
+    }                        
 
     private void bttnStartActionPerformed(java.awt.event.ActionEvent evt) {                                         
-            //StartGame
-
-        // TODO add your handling code here:
+       //StartGame
+    	//Change background image
+    	//Spawn the packman
+    	//Start game
+    	//make Stop Game button visible
+    	//
     }                                        
 
     private void bttnHighScoreActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        //Displays high score menu
+    	//Retrieve items from the database
+    	//Display them in the menu.
     }                                        
 
     private void bttnExitActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    	//Sets the form to not visible and then closes the form.
+    	this.setVisible(false);
+    	this.dispose();
     }                                        
 
     /**
@@ -100,9 +119,8 @@ public class mainForm extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
     private javax.swing.JButton bttnStart;
     private javax.swing.JButton bttnHighScore;
     private javax.swing.JButton bttnExit;
-    // End of variables declaration                   
+                       
 }
