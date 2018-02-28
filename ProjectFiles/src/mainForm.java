@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -13,8 +14,7 @@ public class mainForm extends javax.swing.JFrame {
      * Creates new form mainMenuForm
      */
     public mainForm() {
-       initComponents();
-        
+       initComponents(); 
     }
 
     /**
@@ -25,102 +25,117 @@ public class mainForm extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
+        lblBackground = new javax.swing.JLabel();
         bttnStart = new javax.swing.JButton();
         bttnHighScore = new javax.swing.JButton();
+        bttnCredits = new javax.swing.JButton();
         bttnExit = new javax.swing.JButton();
+        lblBackground.setIcon(new ImageIcon("logo.png"));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(640, 640));
 
-        JLabel backgroundImage = new JLabel(new ImageIcon("PacmanMainMenu.jpg"));
-    
-        this.setTitle("Pacman Game");
-        
-        add(backgroundImage);
-        
-        bttnStart.setText("Start game");
+        bttnStart.setText("Start");
         bttnStart.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(java.awt.event.ActionEvent evt) {
-        		bttnStartActionPerformed(evt);
-        	}
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttnStartActionPerformed(evt);
+            }
         });
-        bttnHighScore.setText("High Scores");
+        
+        bttnHighScore.setText("Scores");
         bttnHighScore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttnHighScoreActionPerformed(evt);
             }
         });
-
+        
+        bttnCredits.setText("Credits");
+        bttnCredits.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttnCreditsActionPerformed(evt);
+            }
+        });
+        
         bttnExit.setText("Exit");
-        bttnExit.addActionListener(new java.awt.event.ActionListener() {
+        bttnCredits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttnExitActionPerformed(evt);
             }
         });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(lblBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bttnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttnHighScore, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(bttnCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bttnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bttnHighScore, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                    .addComponent(bttnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(205, 205, 205))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(404, Short.MAX_VALUE)
-                .addComponent(bttnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bttnHighScore, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(bttnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(lblBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(bttnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addComponent(bttnHighScore, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bttnCredits, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bttnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
-        bttnStart.getAccessibleContext().setAccessibleName("bttnStartGame");
-        bttnHighScore.getAccessibleContext().setAccessibleName("bttnHighScores");
+        lblBackground.getAccessibleContext().setAccessibleName("lblBackground");
+        bttnStart.getAccessibleContext().setAccessibleName("bttnStart");
+        bttnHighScore.getAccessibleContext().setAccessibleName("bttnScore");
+        bttnCredits.getAccessibleContext().setAccessibleName("bttnCredits");
         bttnExit.getAccessibleContext().setAccessibleName("bttnExit");
 
         pack();
-    }                        
+    }// </editor-fold>                       
+    
 
     private void bttnStartActionPerformed(java.awt.event.ActionEvent evt) {                                         
-       //StartGame
-    	//Change background image
-    	//Spawn the packman
-    	//Start game
-    	//make Stop Game button visible
-    	//
-    }                                        
-
+    // TODO add your handling code here:
+    }
     private void bttnHighScoreActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        //Displays high score menu
-    	//Retrieve items from the database
-    	//Display them in the menu.
-    }                                        
-
+        // TODO add your handling code here:
+        }      
+    private void bttnCreditsActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        JOptionPane.showMessageDialog(null, "Created by: Bogdan Dawabsheh and Brad Gallant. \n Original Idea by ...","Credits",JOptionPane.PLAIN_MESSAGE);
+        this.setVisible(true);
+    }     
+    
     private void bttnExitActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    	//Sets the form to not visible and then closes the form.
-    	this.setVisible(false);
-    	this.dispose();
-    }                                        
-
+        this.setVisible(false);
+        this.dispose();
+        }      
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new mainForm().setVisible(true);
-            }
-        });
+    	mainForm main = new mainForm();
+    	main.setVisible(true);
     }
 
-    private javax.swing.JButton bttnStart;
-    private javax.swing.JButton bttnHighScore;
+    // Variables declaration - do not modify                    
+    private javax.swing.JButton bttnCredits;
     private javax.swing.JButton bttnExit;
-                       
+    private javax.swing.JButton bttnHighScore;
+    private javax.swing.JButton bttnStart;
+    private javax.swing.JLabel lblBackground;
+    // End of variables declaration                  
 }
+
