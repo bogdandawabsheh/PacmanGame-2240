@@ -62,6 +62,7 @@ public class mainForm extends javax.swing.JFrame {
         //    	Rectangle2D temp = new Rectangle2D(0,0,640,195);
         //        Image image = new Image("logo.png");
         //        ImageView iv3 = new ImageView();
+        
          //       iv3.setImage(image);
           //      iv3.setViewport(temp);
           //	
@@ -159,27 +160,7 @@ public class mainForm extends javax.swing.JFrame {
         
     	//CREATE NEW FORM
     	//HAVE A TEXT BOX
-    	//RETRIEVE ITEMS FROM DATABASE
-    	//CLOSE STREAM
-    	
-    	
-    	
-    	Integer highScoreCount = 0;	//Variable declaration
-    	
-        try{
-        	//Creates input Scanner with input being the database
-        	Scanner inputScanner = new Scanner(new File("data/highscores.txt"));
-        	if(inputScanner.hasNextLine()){	//Takes the first line ( will be numeric and be the high score count
-        		highScoreCount = Integer.parseInt(inputScanner.nextLine().trim()); //
-        		if(highScoreCount != 0){
-        			for(int i = 0; i<highScoreCount; i++){
-        				//Retrieve items from the textFile and place them inside the textbox.
-        			}
-        		}
-        	}
-        }catch (Exception e){
-        	System.out.println("ERROR");
-        }
+    	//RETRIEVE ITEMS into highscores array
     }  
     
     
