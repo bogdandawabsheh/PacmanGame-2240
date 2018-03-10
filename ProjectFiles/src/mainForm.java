@@ -1,9 +1,20 @@
 	import java.awt.Color;
-import java.awt.Image;
+	import javafx.scene.*;
+	 import javafx.application.Application;
+	 import javafx.geometry.Rectangle2D;
+	 import javafx.scene.Group;
+	 import javafx.scene.Scene; 
+	 import javafx.scene.image.Image;
+	 import javafx.scene.image.ImageView;
+	 import javafx.scene.layout.HBox;
+	 import javafx.stage.Stage; 
+import java.awt.*;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -43,7 +54,20 @@ public class mainForm extends javax.swing.JFrame {
         bttnCredits = new javax.swing.JButton();
         bttnExit = new javax.swing.JButton();
     
-        lblBackground.setIcon(new ImageIcon("logo.png"));
+    
+        
+        //lblBackground.add(new JPanel() {
+        //    @Override
+        //    protected void paintComponent(Graphics g) {
+        //    	Rectangle2D temp = new Rectangle2D(0,0,640,195);
+        //        Image image = new Image("logo.png");
+        //        ImageView iv3 = new ImageView();
+         //       iv3.setImage(image);
+          //      iv3.setViewport(temp);
+          //	
+           // }
+        //}, BorderLayout.CENTER);
+       
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(640, 640));
@@ -122,10 +146,40 @@ public class mainForm extends javax.swing.JFrame {
     
 
     private void bttnStartActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    // TODO add your handling code here:
+    	//START GAME
+    	
+    	//RETURN HIGHSCORE
+    	
+    	//PLACE INTO DATABASE 
+    	
+    	//WHEN RETURNING THE HIGH SCORE INTO THE DATABASE, MAKE SURE TO SET THE FILE BACK TO READONLY()
+    
     }
     private void bttnHighScoreActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        
+    	//CREATE NEW FORM
+    	//HAVE A TEXT BOX
+    	//RETRIEVE ITEMS FROM DATABASE
+    	//CLOSE STREAM
+    	
+    	
+    	
+    	Integer highScoreCount = 0;	//Variable declaration
+    	
+        try{
+        	//Creates input Scanner with input being the database
+        	Scanner inputScanner = new Scanner(new File("data/highscores.txt"));
+        	if(inputScanner.hasNextLine()){	//Takes the first line ( will be numeric and be the high score count
+        		highScoreCount = Integer.parseInt(inputScanner.nextLine().trim()); //
+        		if(highScoreCount != 0){
+        			for(int i = 0; i<highScoreCount; i++){
+        				//Retrieve items from the textFile and place them inside the textbox.
+        			}
+        		}
+        	}
+        }catch (Exception e){
+        	System.out.println("ERROR");
+        }
     }  
     
     
