@@ -1,25 +1,33 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Scanner;
-import javafx.util.Pair;
 
 
 public class Highscores implements Comparable<Highscores>{
 	private Integer score = 0;	//Variable declaration
 	private String name;
 	
+	//Constructor for the Highscores class.
 	public Highscores(String name, Integer score){	
-		this.score = score;
+		this.score = score;	
 		this.name = name;
 	}
 	
+	//Returns name
 	public String getName(){
 		return name;
 	}
+	
+	//Returns score
 	public Integer getScore(){
 		return score;
 	}
 	
-	private static Highscores[] retrieveScores(){
+	//Retrieves scores from the file
+	private static Highscores[] retrieveScores() throws FileNotFoundException, UnsupportedEncodingException{
 		int highScoreCount = retrieveHighScoreCount();
 		Highscores[] tempArray = new Highscores[highScoreCount];
 	    
@@ -33,13 +41,19 @@ public class Highscores implements Comparable<Highscores>{
 	    				inputScanner.nextLine(); //Eats new line
 	    			}
 	    	}
+	    	inputScanner.close();
 	    }catch (Exception e){
-	    	System.out.println("ERROR in retrieving High scores");
+			//Creates a blank file
+	    	PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");
+			writer.println("0");
+			writer.close();
+			//Calls the method again
+			retrieveScores();
 	    }
 		return tempArray;
 	}
 	
-	private static int retrieveHighScoreCount(){
+	private static int retrieveHighScoreCount() throws FileNotFoundException, UnsupportedEncodingException {
 		int highScoreNum = 0;
 		try{
 	    	//Creates input Scanner with input being the database
@@ -49,23 +63,46 @@ public class Highscores implements Comparable<Highscores>{
 	    		inputScanner.close();
 	    	}
 		} catch (Exception e){
-			System.out.println("Error in Retrieving High Score Number");
+			//Creates a blank file
+			PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");
+			writer.println("0");
+			writer.close();
+			//Calls the method again;
+			retrieveHighScoreCount();
 		}
 		return highScoreNum;
 	}
 	
-	public static void addScore(String name, int score){
-		//Retrieves all stuff from the file
-		//Retrieves number of scores from the file
-		//adds in the score
-		//Sorts
-		//adds +1 to the number
-		//Places everything back into the file separated by a space
+	public static void addScore(String name, int score) throws FileNotFoundException, UnsupportedEncodingException{
+		Integer highscoreCount = retrieveHighScoreCount();	//Retrieves the old highscore count
+		Highscores[] oldScores = retrieveScores();	//Retrieves the old scores form the file
+		Highscores[] newScores = new Highscores[oldScores.length + 1];	//Making a new blank array with the length +1
+		
+		for(int i = 0; i<oldScores.length; i++){	//Inputting all values from the old array into the new one
+			newScores[i] = oldScores[i];
+		}
+		newScores[oldScores.length + 1] = new Highscores(name, score);	//Adding the new score
+		
+		Arrays.sort(newScores);	//Sorting the array based on score
+		highscoreCount++;		//Adding +1 to the scorecount
+		
+		PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");	//Opening the file
+		writer.println(highscoreCount);		//inputing the highscore count
+		for(Highscores tempScore : newScores){	//For each value in the newScore array, print it into the file
+			writer.println(tempScore.toString());
+		}
+		writer.close();		//close the writer
 	}
+	
 
 	//Compares two scores
 	@Override
 	public int compareTo(Highscores o) {
 		return this.getScore() - o.getScore();
+	}
+	
+	@Override
+	public String toString(){
+		return name + " " + score;
 	}
 }
