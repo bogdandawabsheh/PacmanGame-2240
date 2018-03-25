@@ -2,6 +2,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -9,6 +16,7 @@ import java.util.Scanner;
 public class Highscores implements Comparable<Highscores>{
 	private Integer score = 0;	//Variable declaration
 	private String name;
+	private static String url = "jdbc:sqlite:src/data/highscores.db";
 	
 	//Constructor for the Highscores class.
 	public Highscores(String name, Integer score){	
@@ -26,72 +34,20 @@ public class Highscores implements Comparable<Highscores>{
 		return score;
 	}
 	
-	//Retrieves scores from the file
-	private static Highscores[] retrieveScores() throws FileNotFoundException, UnsupportedEncodingException{
-		int highScoreCount = retrieveHighScoreCount();
-		Highscores[] tempArray = new Highscores[highScoreCount];
-	    
-		try{
-	    	//Creates input Scanner with input being the database
-	    	Scanner inputScanner = new Scanner(new File("data/highscores.txt"));
-	    	if(highScoreCount > 0){	//Takes the first line ( will be numeric and be the high score count
-	    		inputScanner.nextLine(); //Eats first line	
-	    			for(int i = 0; i<highScoreCount; i++){
-	    				tempArray[i] = new Highscores(inputScanner.next(),Integer.parseInt(inputScanner.next())); //Places into the second column
-	    				inputScanner.nextLine(); //Eats new line
-	    			}
-	    	}
-	    	inputScanner.close();
-	    }catch (Exception e){
-			//Creates a blank file
-	    	PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");
-			writer.println("0");
-			writer.close();
-			//Calls the method again
-			retrieveScores();
-	    }
-		return tempArray;
+	//Returns url
+	public static String getURL(){
+		return url;
 	}
 	
-	private static int retrieveHighScoreCount() throws FileNotFoundException, UnsupportedEncodingException {
-		int highScoreNum = 0;
-		try{
-	    	//Creates input Scanner with input being the database
-	    	Scanner inputScanner = new Scanner(new File("data/highscores.txt"));
-	    	if(inputScanner.hasNextLine()){	//Takes the first line ( will be numeric and be the high score count
-	    		highScoreNum = Integer.parseInt(inputScanner.nextLine().trim()); //
-	    		inputScanner.close();
-	    	}
-		} catch (Exception e){
-			//Creates a blank file
-			PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");
-			writer.println("0");
-			writer.close();
-			//Calls the method again;
-			retrieveHighScoreCount();
-		}
-		return highScoreNum;
+	//Retrieves scores from the file.
+	public static ArrayList<Highscores> retrieveScores() {
+		return retrieveAll();
 	}
 	
-	public static void addScore(String name, int score) throws FileNotFoundException, UnsupportedEncodingException{
-		Integer highscoreCount = retrieveHighScoreCount();	//Retrieves the old highscore count
-		Highscores[] oldScores = retrieveScores();	//Retrieves the old scores form the file
-		Highscores[] newScores = new Highscores[oldScores.length + 1];	//Making a new blank array with the length +1
-		
-		for(int i = 0; i<oldScores.length; i++){	//Inputting all values from the old array into the new one
-			newScores[i] = oldScores[i];
-		}
-		newScores[oldScores.length + 1] = new Highscores(name, score);	//Adding the new score
-		
-		Arrays.sort(newScores);	//Sorting the array based on score
-		highscoreCount++;		//Adding +1 to the scorecount
-		
-		PrintWriter writer = new PrintWriter("data/highscores.txt", "UTF-8");	//Opening the file
-		writer.println(highscoreCount);		//inputing the highscore count
-		for(Highscores tempScore : newScores){	//For each value in the newScore array, print it into the file
-			writer.println(tempScore.toString());
-		}
-		writer.close();		//close the writer
+	//Adds a score into database.
+	public static void addScore(String name, int score){
+		Highscores tempScore = new Highscores(name,score);
+		tempScore.insert(tempScore);
 	}
 	
 
@@ -101,8 +57,77 @@ public class Highscores implements Comparable<Highscores>{
 		return this.getScore() - o.getScore();
 	}
 	
+	//Converts into String the Highscores class
 	@Override
 	public String toString(){
 		return name + " " + score;
 	}
+	
+	//Connects to the database
+	//Creates a new file if fails
+	private static Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(getURL());//Tries to establish connection. 
+            //Creates a new item if doesn't exists
+        } catch (SQLException e) {
+            System.out.println("Error at: connect() " + e.toString());
+        }
+        return conn;
+    }
+	
+	//Inserts items into the database
+	private void insert(Highscores score) {
+		createNewTable();
+        String sql = "INSERT INTO highscores(name, score) VALUES(?,?)";
+        try (Connection conn = connect();	//Creates connection
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {//Inserts items into db
+            pstmt.setString(1, score.getName());
+            pstmt.setDouble(2, score.getScore());
+            pstmt.executeUpdate();	//Executes statement
+
+        	conn.close(); //Closes connection
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+	
+	//Creates a new table if it doesn't exist
+    private static void createNewTable() {
+        // Statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS highscores (\n"
+                + "	name text NOT NULL,\n"
+                + "	score real\n"
+                + ");";
+        try (Connection conn = connect();
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(sql);//Executes statement to create a new table
+
+        	conn.close(); //Closes connection
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    //Retrieves items from the database
+    private static ArrayList<Highscores> retrieveAll(){
+        String sql = "SELECT name, score FROM highscores";
+        ArrayList<Highscores> listOfScores = new ArrayList<Highscores>();
+        
+        //Connects to the database
+        try (Connection conn = connect();
+        	 Statement stmt  = conn.createStatement();	//Creates statement to execute
+             ResultSet rs    = stmt.executeQuery(sql)){	//Executes statement to select all items
+        	while(rs.next()){	//Goes through the database
+        		//Retrieves name and score and adds it to the arraylist
+        		listOfScores.add(new Highscores(rs.getString("name"),rs.getInt("score")));
+        	}
+        	conn.close(); //Closes connection
+        } catch (SQLException e) {
+        	//Ignores closing connection exception
+        }
+
+    	return listOfScores;
+    }
 }
