@@ -1,4 +1,5 @@
 import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -13,6 +14,8 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import javax.swing.JFrame;
 
 import javafx.application.*;
 import javafx.event.*;
@@ -100,10 +103,22 @@ public class MainMenuScene extends Application{
 	}
 	
 	private void startGame(Stage currStage, Scene oldScene){
+		currStage.hide();
+		Game game = new Game();
+		JFrame frame = new JFrame();
+		frame.setTitle(Game.TITLE);
+		frame.add(game);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		
+		frame.setVisible(true);
 		
-		//use currStage.setScene(oldScene) to return to the previous menu.
-		//on a button. See examples bellow.
+		game.start();
+		
+		currStage.show();
+		
 	}
 	private void showScores(Stage currStage,Scene oldScene){
 		ArrayList<Highscores> scores = new ArrayList<Highscores>();
