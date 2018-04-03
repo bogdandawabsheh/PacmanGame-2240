@@ -44,11 +44,13 @@ public class Level
 						Game.player.x = xx*32;
 						Game.player.y = yy*32;
 					}
-					else if(val == 0xFFFF00E5){
+					else if(val == 0xFFFF0000)
+					{
 						//Enemy
 						enemies.add(new Enemy(xx*32,yy*32));
-						}
-					else {
+					}
+					else 
+					{
 						pellets.add(new Pellet(xx*32,yy*32));
 					}
 				}
@@ -60,7 +62,7 @@ public class Level
 		
 		}
 			
-	public  void tick()
+	public void tick()
 	{
 		for(int i = 0; i < enemies.size();i++)
 		{

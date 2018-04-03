@@ -26,6 +26,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	
 	public static Player player;
 	public static Level level;
+	public static SpriteSheet spritesheet;
 	
 	public Game() 
 	{
@@ -37,6 +38,10 @@ public class Game extends Canvas implements Runnable,KeyListener
 	addKeyListener(this);
 	player = new Player(Game.WIDTH/2,Game.HEIGHT/2);
 	level = new Level ("/map/map.png");
+	spritesheet = new SpriteSheet("/sprites/spritesheet.png");
+	
+	new Texture();
+	
 	}
 	
 	

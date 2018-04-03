@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -36,7 +35,18 @@ public void tick()
 	if(level.pellets.size() == 0) 
 	{
 	//we win
+		Game.player = new Player(0,0);
+		Game.level = new Level("/map/map.png");
 	}
+
+	for(int i = 0; i < Game.level.enemies.size();i++)
+	{
+		Enemy en = Game.level.enemies.get(i);
+		if(en.intersects(this)) System.exit(i);
+				
+	}
+
+
 }
 private boolean canMove(int nextx, int nexty)
 {
@@ -57,8 +67,7 @@ private boolean canMove(int nextx, int nexty)
 
 	public void render(Graphics g) 
 	{
-		g.setColor(Color.yellow);
-		g.fillRect(x, y, width, height);
+		g.drawImage(Texture.player,x,y,width,height,null);
 	}
 	
 	
