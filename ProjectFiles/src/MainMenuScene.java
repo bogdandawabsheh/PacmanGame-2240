@@ -2,6 +2,7 @@ import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +15,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 
@@ -103,21 +105,36 @@ public class MainMenuScene extends Application{
 	}
 	
 	private void startGame(Stage currStage, Scene oldScene){
-		currStage.hide();
+
+		TextInputDialog nameInput = new TextInputDialog();
+		nameInput.setTitle("Name input");
+		nameInput.setHeaderText("");
+		nameInput.setGraphic(null);
+		nameInput.setContentText("Please enter your name:");
+		Optional<String> result = nameInput.showAndWait();
+		String playerName;
+		if(result.isPresent())
+			playerName= result.get();
+		else
+			playerName = "";
+		
+		nameInput.setTitle("Name input");
 		Game game = new Game();
 		JFrame frame = new JFrame();
 		frame.setTitle(Game.TITLE);
 		frame.add(game);
 		frame.setResizable(false);
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
 		frame.setVisible(true);
-		
+		frame.toFront();
 		game.start();
 		
-		currStage.show();
+		//Get score from game upon exit
+		
+		//push into database
 		
 	}
 	private void showScores(Stage currStage,Scene oldScene){
