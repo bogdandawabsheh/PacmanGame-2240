@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Class responsible for drawing the level
+ */
 public class Level 
 {
 
@@ -17,6 +20,11 @@ public class Level
 	public List<Pellet> pellets;
 	public List <Enemy> enemies;
 	
+	/**
+	 * Constructor for the level class
+	 * Draws the level with the image from a path
+	 * @param path to the background image
+	 */
 	public Level(String path) 
 	{
 		pellets = new ArrayList<>();
@@ -61,7 +69,10 @@ public class Level
 		}
 		
 		}
-			
+	
+	/**
+	 * Movement control
+	 */
 	public void tick()
 	{
 		for(int i = 0; i < enemies.size();i++)
@@ -70,6 +81,10 @@ public class Level
 		}
 	}
 	
+	/**
+	 * Fills the tiles with a specified color
+	 * @param g
+	 */
 	public void render(Graphics g) 
 	{
 	for(int x = 0; x < width; x++) {

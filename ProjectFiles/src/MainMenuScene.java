@@ -24,6 +24,9 @@ import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
+/**
+ * Draws the main menu for the game
+ */
 public class MainMenuScene extends Application{
 	private Stage oldStage;
 	private Scene scene;
@@ -31,6 +34,11 @@ public class MainMenuScene extends Application{
 	private Image backImage;
 	private ListView<String> lstScores;
 	
+	/**
+	 * Draws the GUI for the main menu and assigns all buttons
+	 * @param primaryStage
+	 * @throws Exception
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -104,6 +112,11 @@ public class MainMenuScene extends Application{
 		
 	}
 	
+	/**
+	 * Starts the game in a new window. Asks user for name input
+	 * @param currStage
+	 * @param oldScene
+	 */
 	private void startGame(Stage currStage, Scene oldScene){
 
 		TextInputDialog nameInput = new TextInputDialog();
@@ -133,10 +146,15 @@ public class MainMenuScene extends Application{
 		game.start();
 		
 		//Get score from game upon exit
-		
 		//push into database
 		
 	}
+	
+	/**
+	 * Changes the scene of the main menu to display the scores
+	 * @param currStage
+	 * @param oldScene
+	 */
 	private void showScores(Stage currStage,Scene oldScene){
 		ArrayList<Highscores> scores = new ArrayList<Highscores>();
 		lstScores = new ListView<String>();

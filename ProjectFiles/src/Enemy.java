@@ -2,6 +2,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+/**
+ * Class for AI control
+ */
 public class Enemy extends Rectangle
 {
 
@@ -25,6 +28,12 @@ public class Enemy extends Rectangle
 	
 	private int lastDir = -1;
 	
+	/**
+	 * Constructor for the Enemy class
+	 * Assigns direction/movement
+	 * @param x
+	 * @param y
+	 */
 	public Enemy(int x,int y)
 	{
 		randomGen = new Random();
@@ -32,6 +41,9 @@ public class Enemy extends Rectangle
 		dir = randomGen.nextInt(4);
 	}
 
+	/**
+	 * Movement control
+	 */
 		public void tick()
 		{
 			if(state == random)
@@ -258,7 +270,12 @@ public class Enemy extends Rectangle
 			}
 			}
 		
-			
+			/**
+			 * Checks if the AI can move in a certain direction
+			 * @param nextx
+			 * @param nexty
+			 * @return True or False
+			 */
 			private boolean canMove(int nextx, int nexty)
 			{
 				Rectangle bounds = new Rectangle(nextx,nexty,width,height);
@@ -276,6 +293,10 @@ public class Enemy extends Rectangle
 				return true;
 			}
 			
+		/**
+		 * Draws the AI with the specific color
+		 * @param g
+		 */
 		public void Render(Graphics g) 
 		{
 			g.drawImage(Texture.ghost,x,y,width,height,null);

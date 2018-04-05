@@ -12,59 +12,91 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
+/**
+ * The class is responsible for database access and highscore storage
+ */
 public class Highscores implements Comparable<Highscores>{
 	private Integer score = 0;	//Variable declaration
 	private String name;
 	private static String url = "jdbc:sqlite:src/data/highscores.db";
 	
-	//Constructor for the Highscores class.
+	/**
+	 * Constructor for the Highscores class.
+	 * @param Player name
+	 * @param Player score
+	 */
 	public Highscores(String name, Integer score){	
 		this.score = score;	
 		this.name = name;
 	}
 	
-	//Returns name
+	/**
+	 * Returns name
+	 * @return Player name
+	 */
 	public String getName(){
 		return name;
 	}
 	
-	//Returns score
+	/**
+	 * Returns score
+	 * @return Player score
+	 */
 	public Integer getScore(){
 		return score;
 	}
 	
-	//Returns url
+	/**
+	 * Returns URL for database location
+	 * @return url for database location
+	 */
 	public static String getURL(){
 		return url;
 	}
 	
-	//Retrieves scores from the file.
+	/**
+	 * Retrieves scores from the file in an array
+	 * @return array containing the scores
+	 */
 	public static ArrayList<Highscores> retrieveScores() {
 		return retrieveAll();
 	}
 	
-	//Adds a score into database.
+	/**
+	 * Adds a score into database.
+	 * @param Name of player
+	 * @param Score of player
+	 */
 	public static void addScore(String name, int score){
 		Highscores tempScore = new Highscores(name,score);
 		tempScore.insert(tempScore);
 	}
 	
 
-	//Compares two scores
+	/**
+	 * Compares two scores
+	 * @param class to compare to
+	 * @return "-" if Less than compared class, 0 if same, "+" if greater than
+	 */
 	@Override
 	public int compareTo(Highscores o) {
 		return this.getScore() - o.getScore();
 	}
 	
-	//Converts into String the Highscores class
+	/**
+	 * Converts into String the Highscores class
+	 * @return String of name + score
+	 */
 	@Override
 	public String toString(){
 		return name + " " + score;
 	}
 	
-	//Connects to the database
-	//Creates a new file if fails
+	/**
+	 * Connects to the database.
+	 * Creates a new file if fails
+	 * @return Connection to the database
+	 */
 	private static Connection connect() {
         Connection conn = null;
         try {
@@ -76,7 +108,10 @@ public class Highscores implements Comparable<Highscores>{
         return conn;
     }
 	
-	//Inserts items into the database
+	/**
+	 * Inserts items into the database
+	 * @param Score to insert
+	 */
 	private void insert(Highscores score) {
 		createNewTable();
         String sql = "INSERT INTO highscores(name, score) VALUES(?,?)";
@@ -92,7 +127,9 @@ public class Highscores implements Comparable<Highscores>{
         }
     }
 	
-	//Creates a new table if it doesn't exist
+	/**
+	 * Creates a new table if it doesn't exist
+	 */
     private static void createNewTable() {
         // Statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS highscores (\n"
@@ -110,7 +147,10 @@ public class Highscores implements Comparable<Highscores>{
         }
     }
     
-    //Retrieves items from the database
+    /**
+     * Retrieves items from the database
+     * @return Array containing the scores
+     */
     private static ArrayList<Highscores> retrieveAll(){
         String sql = "SELECT name, score FROM highscores";
         ArrayList<Highscores> listOfScores = new ArrayList<Highscores>();

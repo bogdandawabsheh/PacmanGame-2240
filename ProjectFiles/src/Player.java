@@ -1,6 +1,9 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+/**
+ * Creates a player on board and allows player control
+ */
 public class Player extends Rectangle
 {
 
@@ -9,11 +12,22 @@ public class Player extends Rectangle
 	
 	public boolean right, left, up, down;
 	private int speed = 4;
-
+	
+/**
+ * Constructor for the Player class
+ * @param x coordinate for player image spawn
+ * @param y coordinate for player image spawn
+ */
 public Player(int x, int y) 
 {
 	setBounds(x,y,32,32);
 }
+
+/**
+ * Player control method
+ * @param none
+ * @return none
+ */
 public void tick() 
 {
 	if(right && canMove(x+speed,y))x+=speed;
@@ -48,6 +62,12 @@ public void tick()
 
 
 }
+/**
+ * Private class for seeing if the player can move in a certain direction
+ * @param nextx
+ * @param nexty
+ * @return True or false depending on outcome.
+ */
 private boolean canMove(int nextx, int nexty)
 {
 	Rectangle bounds = new Rectangle(nextx,nexty,width,height);
@@ -65,6 +85,10 @@ private boolean canMove(int nextx, int nexty)
 	return true;
 }
 
+/**
+ * Draws the graphic to a specified color
+ * @param g
+ */
 	public void render(Graphics g) 
 	{
 		g.drawImage(Texture.player,x,y,width,height,null);

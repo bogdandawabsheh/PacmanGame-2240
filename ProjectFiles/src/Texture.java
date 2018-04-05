@@ -1,10 +1,17 @@
 import java.awt.image.BufferedImage;
 
+/**
+ * Retrieves the spritesheets for the player and ghosts
+ */
 public class Texture 
 {
 public static BufferedImage player;
 public static BufferedImage ghost;
 	
+/**
+ * Constructor for the Texture Class
+ * Retrieves sprite images
+ */
 	public Texture() 
 
 {

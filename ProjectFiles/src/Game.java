@@ -8,6 +8,9 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+/**
+ * Class responsible for game control
+ */
 public class Game extends Canvas implements Runnable,KeyListener
 {
 
@@ -28,6 +31,10 @@ public class Game extends Canvas implements Runnable,KeyListener
 	public static Level level;
 	public static SpriteSheet spritesheet;
 	
+	/**
+	 * Constructor for the game class. 
+	 * Draws the game and assigns controls to Player/AI
+	 */
 	public Game() 
 	{
 	Dimension dimension = new Dimension(Game.WIDTH,Game.HEIGHT);	
@@ -44,7 +51,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 	
 	}
 	
-	
+	/**
+	 * Starts the game
+	 */
 	public synchronized void start() 
 	{
 		if (isRunning) return;
@@ -53,6 +62,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 		thread.start();
 	}
 	
+	/**
+	 * Stops the game
+	 */
 	public synchronized void stop() 
 	{
 		if(!isRunning) return;
@@ -68,12 +80,17 @@ public class Game extends Canvas implements Runnable,KeyListener
 	
 	
 	
-	
+	/**
+	 * Game control
+	 */
 	private void tick() 
 	{
 		player.tick();
 		level.tick();
 	}
+	/**
+	 * Refreshes the game
+	 */
 	private void render() 
 	{
 		BufferStrategy bs = getBufferStrategy();
@@ -93,7 +110,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 	}
 	
 	
-	
+	/**
+	 * Game running control
+	 */
 	@Override
 	public void run() 
 	{
@@ -133,6 +152,10 @@ public class Game extends Canvas implements Runnable,KeyListener
 		
 	}
 
+	/**
+	 * Test class for testing the game
+	 * @param args
+	 */
 	public static void main(String [] args) 
 	{
 		Game game = new Game();
@@ -149,6 +172,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 		game.start();
 	}
 
+	/**
+	 * Checks what key was pressed and starts movement
+	 */
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
@@ -161,6 +187,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 		
 	}
 
+	/**
+	 * Checks what was released and stops movement
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
