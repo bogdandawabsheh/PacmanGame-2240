@@ -31,6 +31,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	public static Level level;
 	public static SpriteSheet spritesheet;
 	
+	private static Integer score = 0;
 	/**
 	 * Constructor for the game class. 
 	 * Draws the game and assigns controls to Player/AI
@@ -51,6 +52,16 @@ public class Game extends Canvas implements Runnable,KeyListener
 	
 	}
 	
+	public static void addScore(){
+		score++;
+	}
+	
+	public static void resetScore(){
+		score = 0;
+	}
+	public static Integer returnScore(){
+		return score;
+	}
 	/**
 	 * Starts the game
 	 */
@@ -206,7 +217,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		
 		
 	}
-	
+
 	
 	
 	

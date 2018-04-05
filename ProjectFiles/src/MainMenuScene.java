@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +35,9 @@ public class MainMenuScene extends Application{
 	private Button btnStart, btnExit, btnHighScores, btnBack;
 	private Image backImage;
 	private ListView<String> lstScores;
-	
+	private static JFrame frame;
+	private static String playerName;
+	private static Game game;
 	/**
 	 * Draws the GUI for the main menu and assigns all buttons
 	 * @param primaryStage
@@ -75,7 +79,7 @@ public class MainMenuScene extends Application{
 		btnExit.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
-				primaryStage.close(); //Closes form
+				System.exit(0); //Closes form
 			}
 		});
 		
@@ -125,31 +129,44 @@ public class MainMenuScene extends Application{
 		nameInput.setGraphic(null);
 		nameInput.setContentText("Please enter your name:");
 		Optional<String> result = nameInput.showAndWait();
-		String playerName;
+		
 		if(result.isPresent())
 			playerName= result.get();
 		else
-			playerName = "";
+			playerName = "Unnamed";
 		
 		nameInput.setTitle("Name input");
-		Game game = new Game();
-		JFrame frame = new JFrame();
+		//frame.removeAll();
+		frame = new JFrame();
+		
+		game = new Game();
 		frame.setTitle(Game.TITLE);
 		frame.add(game);
 		frame.setResizable(false);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent e) {
+		        System.exit(0);
+		    }
+		});
 		frame.setLocationRelativeTo(null);
 		
 		frame.setVisible(true);
 		frame.toFront();
+		Game.resetScore();
+		
 		game.start();
 		
-		//Get score from game upon exit
-		//push into database
 		
 	}
-	
+	public static void disposeFrame(){
+        Highscores.addScore(playerName, Game.returnScore());
+        frame.removeAll();
+        frame.setVisible(false);
+        game.stop();
+	}
 	/**
 	 * Changes the scene of the main menu to display the scores
 	 * @param currStage
@@ -178,7 +195,7 @@ public class MainMenuScene extends Application{
 		//Retrieves scores from the database
 		scores = Highscores.retrieveScores();
 		//Sorts the scores
-		Collections.sort(scores);
+		Collections.sort(scores,Collections.reverseOrder());
 		
 		//Place the items from the array into the ViewList
 		for (Highscores score : scores){

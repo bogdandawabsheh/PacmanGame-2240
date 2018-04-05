@@ -41,6 +41,7 @@ public void tick()
 	{
 	if(this.intersects(level.pellets.get(i)))
 	{
+		Game.addScore();
 		level.pellets.remove(i);
 		break;
 		}
@@ -56,7 +57,9 @@ public void tick()
 	for(int i = 0; i < Game.level.enemies.size();i++)
 	{
 		Enemy en = Game.level.enemies.get(i);
-		if(en.intersects(this)) System.exit(i);
+		if(en.intersects(this)){
+			MainMenuScene.disposeFrame();
+		}
 				
 	}
 

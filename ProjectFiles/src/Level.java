@@ -83,7 +83,7 @@ public class Level
 	}
 	for(int i = 0; i < enemies.size(); i++)
 	{
-		enemies.get(i).render(g);
+		enemies.get(i).Render(g);
 	}
 	
 }
