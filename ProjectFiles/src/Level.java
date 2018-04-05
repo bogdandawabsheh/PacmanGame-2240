@@ -6,9 +6,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-/**
- * Class responsible for drawing the level
- */
 public class Level 
 {
 
@@ -20,11 +17,6 @@ public class Level
 	public List<Pellet> pellets;
 	public List <Enemy> enemies;
 	
-	/**
-	 * Constructor for the level class
-	 * Draws the level with the image from a path
-	 * @param path to the background image
-	 */
 	public Level(String path) 
 	{
 		pellets = new ArrayList<>();
@@ -42,16 +34,16 @@ public class Level
 			{
 				for(int yy = 0; yy <height; yy++) {
 					int val = pixels[xx + (yy*width)];
-					
+					//Tells the program which squares are tiles based on hex code and initiates it
 					if(val == 0xFF000000){
 						
 						tiles[xx][yy] = new Tile(xx*32,yy*32);
-					}
+					}//Tells the program which tile is associated to the player based on the hex code associated with the player
 					else if(val == 0xFF0026FF){
 						//Player
 						Game.player.x = xx*32;
 						Game.player.y = yy*32;
-					}
+					}//Indictaes which tiles are associated with the enemy by hex code.
 					else if(val == 0xFFFF0000)
 					{
 						//Enemy
@@ -69,22 +61,15 @@ public class Level
 		}
 		
 		}
-	
-	/**
-	 * Movement control
-	 */
+			
 	public void tick()
 	{
-		for(int i = 0; i < enemies.size();i++)
+		for(int i = 0; i < enemies.size(); i++)
 		{
 			enemies.get(i).tick();
 		}
 	}
 	
-	/**
-	 * Fills the tiles with a specified color
-	 * @param g
-	 */
 	public void render(Graphics g) 
 	{
 	for(int x = 0; x < width; x++) {
@@ -96,7 +81,10 @@ public class Level
 	{
 		pellets.get(i).render(g);
 	}
-	
+	for(int i = 0; i < enemies.size(); i++)
+	{
+		enemies.get(i).render(g);
+	}
 	
 }
 
