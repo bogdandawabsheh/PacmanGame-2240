@@ -18,11 +18,11 @@ public class Level
 	public List <Enemy> enemies;
 	
 	public Level(String path) 
-	{
+	{//Creates an array list for Pellet and Enemy
 		pellets = new ArrayList<>();
 		enemies = new ArrayList<>();
 		
-		try {
+		try {//Creates a map based on the spritesheet provided.
 			BufferedImage map = ImageIO.read(getClass().getResource(path));
 			this.width = map.getWidth();
 			this.height = map.getHeight();
@@ -43,14 +43,14 @@ public class Level
 						//Player
 						Game.player.x = xx*32;
 						Game.player.y = yy*32;
-					}//Indictaes which tiles are associated with the enemy by hex code.
+					}//Indictaes which tiles are associated with the enemy by hex code and sets dimensions
 					else if(val == 0xFFFF0000)
 					{
 						//Enemy
 						enemies.add(new Enemy(xx*32,yy*32));
-					}
+					}//Indicates which squares are associated with the pellets and sets dimensions
 					else 
-					{
+					{	//Pellet
 						pellets.add(new Pellet(xx*32,yy*32));
 					}
 				}
@@ -61,7 +61,7 @@ public class Level
 		}
 		
 		}
-			
+	//Updating the enemies	
 	public void tick()
 	{
 		for(int i = 0; i < enemies.size(); i++)
@@ -69,18 +69,18 @@ public class Level
 			enemies.get(i).tick();
 		}
 	}
-	
+	//Renders the tiles
 	public void render(Graphics g) 
 	{
 	for(int x = 0; x < width; x++) {
 		for(int y = 0; y < height; y++) {
 			if (tiles[x][y] != null)tiles[x][y].render(g);
 		}
-	}
+	}//Renders the pellets
 	for(int i = 0; i < pellets.size(); i++) 
 	{
 		pellets.get(i).render(g);
-	}
+	}//Renders the enemies
 	for(int i = 0; i < enemies.size(); i++)
 	{
 		enemies.get(i).Render(g);

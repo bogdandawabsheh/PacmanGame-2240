@@ -18,9 +18,9 @@ public class Game extends Canvas implements Runnable,KeyListener
 	private static final long serialVersionUID = 1L;
 
 	private boolean isRunning = false;
-	
+	//Sets the window width to 640 pixels
 	public static int WIDTH = 640;
-
+//Sets the window height to 480 pixels
 	public static int HEIGHT = 480;
 	public static final String TITLE = "Pac-Man";
 	
@@ -51,14 +51,14 @@ public class Game extends Canvas implements Runnable,KeyListener
 	new Texture();
 	
 	}
-	
+	//Adds score
 	public static void addScore(){
 		score++;
 	}
-	
+	//Resets the score to 0
 	public static void resetScore(){
 		score = 0;
-	}
+	}//Returns score
 	public static Integer returnScore(){
 		return score;
 	}
@@ -85,12 +85,8 @@ public class Game extends Canvas implements Runnable,KeyListener
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
-	
-	
+
 	/**
 	 * Game control
 	 */
@@ -109,7 +105,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		{
 			createBufferStrategy(3);
 			return;
-		}
+		}//Sets the colour of the background relative to the predetermind size set for the window.
 	Graphics g = bs.getDrawGraphics();
 	g.setColor(Color.BLACK);
 	g.fillRect(0, 0, Game.WIDTH,Game.HEIGHT);
@@ -119,19 +115,19 @@ public class Game extends Canvas implements Runnable,KeyListener
 	bs.show();
 	
 	}
-	
-	
 	/**
 	 * Game running control
 	 */
 	@Override
 	public void run() 
-	{
+	{//Sets the frame in which the game is going to run
 	requestFocus();
 	int fps = 0;
 	double timer = System.currentTimeMillis();
 	long lastTime = System.nanoTime();
+	//Target FPS is 60
 	double targetTick = 60;
+	//Resets the delta tp 0
 	double delta = 0;
 	double ns = 1000000000/targetTick;
 	
@@ -149,7 +145,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 			fps++;
 			delta--;
 			
-		}
+		}//Displays tje current fps
 	if(System.currentTimeMillis() - timer >= 1000) 
 	{
 		System.out.println(fps);
@@ -193,9 +189,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		if(e.getKeyCode() == KeyEvent.VK_LEFT)player.left = true;
 		if(e.getKeyCode() == KeyEvent.VK_UP)player.up = true;
 		if(e.getKeyCode() == KeyEvent.VK_DOWN)player.down = true;
-		
-		
-		
+
 	}
 
 	/**
