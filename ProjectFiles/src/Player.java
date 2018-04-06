@@ -6,7 +6,7 @@ import java.awt.Rectangle;
  */
 public class Player extends Rectangle
 {
-
+	//Universal identifier for Serializable class
 	private static final long serialVersionUID = 1L;
 	
 	

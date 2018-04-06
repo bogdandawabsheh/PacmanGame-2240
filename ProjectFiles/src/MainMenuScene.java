@@ -1,43 +1,46 @@
-import javafx.scene.*;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-import javafx.application.*;
-import javafx.event.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Draws the main menu for the game
  */
 public class MainMenuScene extends Application{
-	private Stage oldStage;
+	private Scene mainMenuScene;
 	private Scene scene;
 	private Button btnStart, btnExit, btnHighScores, btnBack;
+	private Label scoreLabel;
 	private Image backImage;
 	private ListView<String> lstScores;
 	private static JFrame frame;
-	private static String playerName;
+	private static String playerName = "Player";
 	private static Game game;
+	
 	/**
 	 * Draws the GUI for the main menu and assigns all buttons
 	 * @param primaryStage
@@ -114,6 +117,7 @@ public class MainMenuScene extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+		mainMenuScene = scene;
 	}
 	
 	/**
@@ -122,7 +126,7 @@ public class MainMenuScene extends Application{
 	 * @param oldScene
 	 */
 	private void startGame(Stage currStage, Scene oldScene){
-
+		//Creates a new textbox input
 		TextInputDialog nameInput = new TextInputDialog();
 		nameInput.setTitle("Name input");
 		nameInput.setHeaderText("");
@@ -130,15 +134,16 @@ public class MainMenuScene extends Application{
 		nameInput.setContentText("Please enter your name:");
 		Optional<String> result = nameInput.showAndWait();
 		
-		if(result.isPresent())
-			playerName= result.get();
-		else
-			playerName = "Unnamed";
-		
-		nameInput.setTitle("Name input");
+		//Checks if the result is present from the WindowBox
+		//If yes, retrieves player name
+		if(result.isPresent()){
+			if(!result.get().equals(""))
+				playerName= result.get();
+		}
+			
 		//frame.removeAll();
 		frame = new JFrame();
-		
+		//Control of the game frame
 		game = new Game();
 		frame.setTitle(Game.TITLE);
 		frame.add(game);
@@ -161,12 +166,22 @@ public class MainMenuScene extends Application{
 		
 		
 	}
+	
+	/**
+	 * Disposes the game frame and stops the game
+	 */
 	public static void disposeFrame(){
+        JOptionPane.showMessageDialog(frame,
+        		"Your score is: " + Game.returnScore() + "\nScore has been saved into the database.",
+        		"Game Over",
+        	    JOptionPane.PLAIN_MESSAGE);
+		
         Highscores.addScore(playerName, Game.returnScore());
         frame.removeAll();
         frame.setVisible(false);
         game.stop();
 	}
+	
 	/**
 	 * Changes the scene of the main menu to display the scores
 	 * @param currStage
@@ -185,7 +200,7 @@ public class MainMenuScene extends Application{
 		btnBack.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
-				currStage.setScene(oldScene);
+				currStage.setScene(mainMenuScene);
 			}
 		});
 		
@@ -196,15 +211,17 @@ public class MainMenuScene extends Application{
 		scores = Highscores.retrieveScores();
 		//Sorts the scores
 		Collections.sort(scores,Collections.reverseOrder());
-		
+		scoreLabel = new Label("Name - Score");
+		scoreLabel.setTextFill(Color.YELLOW);
 		//Place the items from the array into the ViewList
 		for (Highscores score : scores){
 			lstScores.getItems().add(score.toString());
 		}
 		
 		//Adjusts the looks
-		lstScores.setMaxSize(150,400);
+		lstScores.setMaxSize(250,400);
 		lstScores.setBackground(null);
+		scoreMenu.getChildren().add(scoreLabel);
 		scoreMenu.getChildren().add(lstScores);
 		scoreMenu.getChildren().add(btnBack);
 		scoreMenu.setBackground(null);

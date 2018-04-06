@@ -2,6 +2,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+/**
+ * Class for AI control
+ */
 public class Enemy extends Rectangle
 {
 
@@ -25,7 +28,12 @@ public class Enemy extends Rectangle
 	//If the ghosts were not able to find a path
 	private int lastDir = -1;
 	
-	
+	/**
+	 * Constructor for the Enemy class
+	 * Assigns direction/movement
+	 * @param x Starting point for the enemy on x axis
+	 * @param y Starting point for the enemy on y axis
+	 */
 	public Enemy(int x,int y)
 	{//Initializes random
 		randomGen = new Random();
@@ -35,7 +43,10 @@ public class Enemy extends Rectangle
 		dir = randomGen.nextInt(4);
 	}
 		
-
+/**
+ * Movement control for the ghosts.
+ * Includes 'smart' state - follows player
+ */
 		public void tick()
 		{/**Setting the state to random with the following code allows the ghosts to move freely 
 			without focusing on the player for a predetermind amount of time*/
@@ -261,7 +272,12 @@ public class Enemy extends Rectangle
 					}
 			}
 
-		//Method copied from the player class, determines if the object is colliding with the wall tiles, not allowing the player or ghost to clip through the
+		/**
+		 * Determines if the object is colliding with the wall tiles, not allowing the player or ghost to clip through the
+		 * @param nextx X-Coordinate in the direction the enemy is traveling
+		 * @param nexty Y-Coordinate in the diretion the enemy is traveling
+		 * @return True or false
+		 */
 		private boolean canMove(int nextx, int nexty)
 		{
 			Rectangle bounds = new Rectangle(nextx,nexty,width,height);
@@ -279,7 +295,10 @@ public class Enemy extends Rectangle
 			return true;
 		}
 		
-			
+		/**
+		 * Draws the AI with the specific texture/layout/color
+		 * @param g Graphics for the ghost
+		 */	
 		public void Render(Graphics g) 
 		{
 			g.drawImage(Texture.ghost,x,y,width,height,null);

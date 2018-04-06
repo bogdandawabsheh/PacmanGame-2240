@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Class esponsible for creation of the game level
+ */
 public class Level 
 {
 
@@ -17,6 +20,10 @@ public class Level
 	public List<Pellet> pellets;
 	public List <Enemy> enemies;
 	
+	/**
+	 * Constructor for the level class
+	 * @param path to the level map
+	 */
 	public Level(String path) 
 	{//Creates an array list for Pellet and Enemy
 		pellets = new ArrayList<>();
@@ -61,7 +68,9 @@ public class Level
 		}
 		
 		}
-	//Updating the enemies	
+	/**
+	 * Class responsible for updating enemies	
+	 */
 	public void tick()
 	{
 		for(int i = 0; i < enemies.size(); i++)
@@ -69,7 +78,11 @@ public class Level
 			enemies.get(i).tick();
 		}
 	}
-	//Renders the tiles
+
+	/**
+	 * Class responsible for rendering game tiles
+	 * @param g Render settings
+	 */
 	public void render(Graphics g) 
 	{
 	for(int x = 0; x < width; x++) {

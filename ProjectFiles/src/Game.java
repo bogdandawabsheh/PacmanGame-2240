@@ -20,7 +20,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	private boolean isRunning = false;
 	//Sets the window width to 640 pixels
 	public static int WIDTH = 640;
-//Sets the window height to 480 pixels
+	//Sets the window height to 480 pixels
 	public static int HEIGHT = 480;
 	public static final String TITLE = "Pac-Man";
 	
@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	public static SpriteSheet spritesheet;
 	
 	private static Integer score = 0;
+	
 	/**
 	 * Constructor for the game class. 
 	 * Draws the game and assigns controls to Player/AI
@@ -51,14 +52,21 @@ public class Game extends Canvas implements Runnable,KeyListener
 	new Texture();
 	
 	}
-	//Adds score
+	/**
+	 * Adds score
+	 */
 	public static void addScore(){
 		score++;
 	}
-	//Resets the score to 0
+	/**
+	 * Resets the score to 0
+	 */
 	public static void resetScore(){
 		score = 0;
-	}//Returns score
+	}
+	/**
+	 * Returns score
+	 */	
 	public static Integer returnScore(){
 		return score;
 	}
@@ -116,11 +124,12 @@ public class Game extends Canvas implements Runnable,KeyListener
 	
 	}
 	/**
-	 * Game running control
+	 * Game display control
 	 */
 	@Override
 	public void run() 
-	{//Sets the frame in which the game is going to run
+	{
+	//Sets the frame in which the game is going to run
 	requestFocus();
 	int fps = 0;
 	double timer = System.currentTimeMillis();
@@ -145,16 +154,19 @@ public class Game extends Canvas implements Runnable,KeyListener
 			fps++;
 			delta--;
 			
-		}//Displays tje current fps
+		}
+	//Displays the current fps
 	if(System.currentTimeMillis() - timer >= 1000) 
 	{
-		System.out.println(fps);
+		//Commented off to not display on runtime
+		//System.out.println(fps);
 		fps = 0;
 		timer += 1000;
 		
 	}
 		
 	}
+		//Stops the game if found not running
 		stop();
 		
 	}
@@ -193,7 +205,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	}
 
 	/**
-	 * Checks what was released and stops movement
+	 * Checks what key was released and stops movement
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) 
@@ -205,14 +217,10 @@ public class Game extends Canvas implements Runnable,KeyListener
 		
 	}
 
+	/**
+	 * Checks what key was typed. Ignored in this instance
+	 */
 	@Override
-	public void keyTyped(KeyEvent e)
-	{
-		
-		
-	}
+	public void keyTyped(KeyEvent e){}
 
-	
-	
-	
 }
